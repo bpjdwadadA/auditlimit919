@@ -2,6 +2,7 @@ package api
 
 import (
 	"auditlimit/config"
+	"context"
 	"strings"
 	"time"
 
@@ -10,6 +11,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/util/gconv"
 )
+
+var wait time.Duration = 10 * time.Second
 
 func AuditLimit(r *ghttp.Request) {
 	ctx := r.Context()
@@ -146,7 +149,7 @@ func checkPlusUser(token string) bool {
 	// 调用远程接口检查用户是否为 plus 用户
 	resp, err := g.Client().SetHeaderMap(g.MapStrStr{
 		"Content-Type": "application/json",
-	}).Post("https://gpt.bpjgpt.top/check_plus_end_time", g.Map{
+	}).Post(context.Background(), "https://gpt.bpjgpt.top/check_plus_end_time", g.Map{
 		"token": token,
 	})
 	if err != nil {
