@@ -47,7 +47,7 @@ func AuditLimit(r *ghttp.Request) {
 	if containsAny(ctx, prompt, config.ForbiddenWords) {
 		r.Response.Status = 400
 		r.Response.WriteJson(g.Map{
-			"detail": "请珍惜账号,不要提问违禁内容.",
+			"detail": "此段内容中有群主设置得违禁词，请修改内容重新提问",
 		})
 		return
 	}
@@ -96,7 +96,7 @@ func AuditLimit(r *ghttp.Request) {
 			// r.Response.WriteJson(resMsg)
 			r.Response.WriteJson(g.Map{
 				// "detail:":"您已经触发使用频率限制,当前限制为 "+ gconv.String(config.O1LIMIT) + " 次/"+ gconv.String(config.O1PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
-				"detail": "You have triggered the usage frequency limit, the current limit is " + gconv.String(config.O1LIMIT) + " times/" + gconv.String(config.O1PER) + ", please wait " + gconv.String(int(wait)) + " seconds before trying again.\n" + "您已经触发使用频率限制,当前限制为 " + gconv.String(config.O1LIMIT) + " 次/" + gconv.String(config.O1PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
+				"detail": "You have triggered the usage frequency limit, the current limit is " + gconv.String(config.O1LIMIT) + " times/" + gconv.String(config.O1PER) + ", please wait " + gconv.String(int(wait)) + " seconds before trying again.\n" + "您已经触发本系统得使用频率限制,当前限制为 " + gconv.String(config.O1LIMIT) + " 次/" + gconv.String(config.O1PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
 			})
 			return
 		} else {
@@ -129,7 +129,7 @@ func AuditLimit(r *ghttp.Request) {
 			// r.Response.WriteJson(resMsg)
 			r.Response.WriteJson(g.Map{
 				// "detail:":"您已经触发使用频率限制,当前限制为 "+ gconv.String(config.LIMIT) + " 次/"+ gconv.String(config.PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
-				"detail": "You have triggered the usage frequency limit, the current limit is " + gconv.String(config.LIMIT) + " times/" + gconv.String(config.PER) + ", please wait " + gconv.String(int(wait)) + " seconds before trying again.\n" + "您已经触发使用频率限制,当前限制为 " + gconv.String(config.LIMIT) + " 次/" + gconv.String(config.PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
+				"detail": "You have triggered the usage frequency limit, the current limit is " + gconv.String(config.LIMIT) + " times/" + gconv.String(config.PER) + ", please wait " + gconv.String(int(wait)) + " seconds before trying again.\n" + "您已经触发本系统得使用频率限制,当前限制为 " + gconv.String(config.LIMIT) + " 次/" + gconv.String(config.PER) + ",请等待 " + gconv.String(int(wait)) + " 秒后再试.",
 			})
 			return
 		} else {
