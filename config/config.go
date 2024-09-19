@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	PORT           = 8080
+	PORT           = 8777
 	PlusModels     = garray.NewStrArrayFrom([]string{"gpt-4", "gpt-4o", "gpt-4-browsing", "gpt-4-plugins", "gpt-4-mobile", "gpt-4-code-interpreter", "gpt-4-dalle", "gpt-4-gizmo", "gpt-4-magic-create"})
 	O1Models       = garray.NewStrArrayFrom([]string{"o1-preview", "o1-mini"})
 	ForbiddenWords = []string{}         // 禁止词
