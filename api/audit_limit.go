@@ -46,12 +46,6 @@ func AuditLimit(r *ghttp.Request) {
 		r.Response.WriteJson(g.Map{"detail": "Unauthorized request, missing token."})
 		return
 	}
-	g.Log().Debug(ctx, "token", token)
-
-	// 获取其他头部信息
-	gfsessionid := r.Cookie.Get("gfsessionid").String()
-	referer := r.Header.Get("referer")
-	g.Log().Debug(ctx, "gfsessionid", gfsessionid, "referer", referer)
 
 	// 获取请求内容
 	reqJson, err := r.GetJson()
@@ -62,13 +56,8 @@ func AuditLimit(r *ghttp.Request) {
 		return
 	}
 
-	// 安全获取 action
-	action := reqJson.Get("action").String()
-	g.Log().Debug(ctx, "action", action)
-
 	// 安全获取 model
 	model := reqJson.Get("model").String()
-	g.Log().Debug(ctx, "model", model)
 
 	// 安全获取 prompt
 	prompt := reqJson.Get("messages.0.content.parts.0").String()
@@ -78,7 +67,6 @@ func AuditLimit(r *ghttp.Request) {
 		r.Response.WriteJson(g.Map{"detail": "请求内容缺少必要的字段"})
 		return
 	}
-	g.Log().Debug(ctx, "prompt", prompt)
 
 	// 判断提问内容是否包含禁止词
 	if containsAny(ctx, prompt, config.ForbiddenWords) {
@@ -133,7 +121,6 @@ func getTokenFromRequest(r *ghttp.Request) string {
 func containsAny(ctx g.Ctx, text string, array []string) bool {
 	for _, item := range array {
 		if strings.Contains(text, item) {
-			g.Log().Debug(ctx, "containsAny", text, item)
 			return true
 		}
 	}
@@ -197,7 +184,6 @@ func handleRateLimit(ctx context.Context, r *ghttp.Request, token string, limit 
 
 	limiter := GetVisitor(token, limit, period)
 	remain := limiter.TokensAt(time.Now())
-	g.Log().Debug(ctx, "remaining tokens", remain)
 
 	if remain < 1 {
 		waitTime := calculateWaitTime(period, limit, remain)
